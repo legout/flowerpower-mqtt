@@ -123,22 +123,31 @@ class MQTTListener:
     def _parse_message_payload(self, message: MQTTMessage) -> Dict[str, Any]:
         """
         Parse MQTT message payload.
-        
+
         Args:
             message: MQTT message
-            
+
         Returns:
             Parsed payload data
         """
-        try:
-            # Try to parse as JSON
-            return message.payload_json()
-        except json.JSONDecodeError:
-            # Fallback to string payload
+        # Try to parse as JSON
+        json_data = message.deserialize_json()
+        if json_data is not None:
+            return json_data
+
+        # Fallback to string payload
+        payload_str = message.payload_str
+        if payload_str is not None:
             return {
-                "raw_payload": message.payload_str,
+                "raw_payload": payload_str,
                 "payload_bytes": message.payload
             }
+
+        # Binary payload
+        return {
+            "payload_bytes": message.payload,
+            "is_binary": True
+        }
     
     def _determine_execution_mode(self, subscription, message: MQTTMessage) -> str:
         """

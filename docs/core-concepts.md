@@ -75,6 +75,17 @@ subscriptions:
     pipeline: "alert_handler"
     qos: 2
     execution_mode: "sync"
+    deserialization_format: "json" # Example: explicitly set deserialization format
+  - topic: "sensors/binary_data"
+    pipeline: "process_binary_sensor"
+    qos: 0
+    execution_mode: "async"
+    deserialization_format: "msgpack" # Example: MessagePack payload
+  - topic: "mixed/format_data"
+    pipeline: "handle_mixed_format"
+    qos: 1
+    execution_mode: "async"
+    deserialization_format: "auto" # Example: auto-detect payload format
 
 job_queue:
   enabled: true
@@ -98,5 +109,51 @@ This configuration can be loaded by both the CLI and the programmatic API, ensur
 *   **Error Counts**: Logs errors encountered during message processing or pipeline execution.
 *   **Connection Status**: Indicates whether the plugin is currently connected to the MQTT broker.
 *   **Job Queue Status**: Provides insights into the state of the job queue if enabled.
+
+## Payload Deserialization
+
+`flowerpower-mqtt` offers robust payload deserialization capabilities, allowing you to automatically convert incoming MQTT message payloads from various formats into Python objects. This is managed primarily through the `deserialization_format` field in your `SubscriptionConfig`.
+
+### Supported Formats
+
+The `MQTTMessage` class supports the following payload serialization/deserialization formats:
+
+*   **`json`**: For payloads encoded as JSON strings. Deserialized into Python dictionaries or lists.
+*   **`yaml`**: For payloads encoded as YAML strings. Deserialized into Python dictionaries or lists.
+*   **`msgpack`**: For payloads encoded using MessagePack, a binary serialization format. Deserialized into standard Python types.
+*   **`pickle`**: For payloads serialized using Python's `pickle` module. Deserialized into the original Python object. **Use with caution** as unpickling data from untrusted sources can be a security risk.
+*   **`protobuf`**: For payloads serialized using Google's Protocol Buffers. Requires a compiled Protobuf schema and the corresponding Python classes to be available.
+*   **`pyarrow`**: For payloads serialized using Apache Arrow IPC format (e.g., Arrow Tables, Arrays). Deserialized into PyArrow objects.
+
+### The `deserialization_format` Field
+
+When defining a subscription, you can specify the `deserialization_format` to instruct `flowerpower-mqtt` how to interpret the incoming payload:
+
+```yaml
+subscriptions:
+  - topic: "sensors/json_data"
+    pipeline: "process_json"
+    deserialization_format: "json"
+  - topic: "sensor/readings/msgpack"
+    pipeline: "process_msgpack"
+    deserialization_format: "msgpack"
+```
+
+If `deserialization_format` is not specified for a subscription, `flowerpower-mqtt` will attempt to deserialize text-based payloads as JSON by default.
+
+### "Auto" Detection Mechanism
+
+The `deserialize()` method within `MQTTMessage` includes an intelligent "auto" detection feature. When `deserialization_format` is set to `"auto"`, the system attempts to deserialize the payload in a specific, prioritized order until a successful parse is achieved. This provides flexibility when the payload format might vary or is not strictly known beforehand.
+
+The order of attempts for "auto" detection is:
+
+1.  **JSON**: Attempts to parse the payload as a JSON string. This is a common and often human-readable format.
+2.  **MessagePack**: If JSON parsing fails, it attempts MessagePack deserialization. MessagePack is a compact binary format, making it efficient for many IoT and data streaming scenarios.
+3.  **YAML**: If MessagePack fails, it tries YAML. YAML is human-friendly and often used for configuration, but can also be used for data serialization.
+4.  **PyArrow**: Next, it attempts PyArrow IPC deserialization. This is particularly useful for structured tabular data.
+5.  **Pickle**: Finally, it attempts Python's Pickle format. This is a Python-specific serialization and should be used with caution, especially with untrusted data, due to potential security vulnerabilities.
+
+**Rationale for the Order:**
+The order is chosen to prioritize commonly used, safer, and more efficient formats first (JSON, MessagePack, PyArrow) before falling back to less common or potentially less secure formats like Pickle. This ensures that the most likely successful and performant deserialization attempts are made early. If all attempts fail, the payload will be available as `raw_payload` (bytes) and `payload_str` (string) in the `MQTTMessage` object passed to your pipeline, allowing for manual handling.
 
 These statistics are accessible via both the CLI (`flowerpower-mqtt status`, `flowerpower-mqtt monitor`) and the programmatic API (`MQTTPlugin.get_statistics()`, `MQTTPlugin.get_subscriptions()`), allowing you to integrate monitoring into your existing dashboards or scripts.

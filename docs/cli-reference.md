@@ -77,6 +77,7 @@ flowerpower-mqtt subscribe TOPIC PIPELINE_NAME [OPTIONS]
 
 *   `--qos`, `-q` (`int`): QoS level (0, 1, or 2) (default: `0`).
 *   `--mode`, `-m` (`str`): Execution mode (`sync`, `async`, or `mixed`) (default: `sync`).
+*   `--deserialization-format`, `-d` (`str`): Payload deserialization format (`auto`, `json`, `yaml`, `msgpack`, `pickle`, `protobuf`, `pyarrow`) (default: `auto`).
 *   `--config`, `-c` (`Path`): Configuration file to use.
 *   `--save-config` (`bool`): Save the new subscription to the configuration file.
 
@@ -91,6 +92,12 @@ flowerpower-mqtt subscribe "logs/system" analyze_logs --qos 1 --mode async
 
 # Subscribe with mixed execution mode
 flowerpower-mqtt subscribe "events/#" handle_event --qos 2 --mode mixed
+
+# Subscribe with a specific deserialization format
+flowerpower-mqtt subscribe "sensor/json" process_json_data --deserialization-format json
+
+# Subscribe with auto-detection for payload format
+flowerpower-mqtt subscribe "sensor/data" process_auto_data --deserialization-format auto
 ```
 
 ### `flowerpower-mqtt unsubscribe`

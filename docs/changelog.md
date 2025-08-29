@@ -1,10 +1,15 @@
 # Changelog
 
 This document tracks significant changes and new features in `flowerpower-mqtt`.
+## v0.2.1 (Current)
+
+*   **Breaking Change**: Migrated from Pydantic to `msgspec.Struct` including `MQTTMessage`.
+*   **New**: Enhanced `MQTTMessage` with comprehensive payload serialization/deserialization capabilities (JSON, YAML, MessagePack, Pickle, Protobuf, PyArrow IPC).
+*   **New**: Introduced `deserialization_format` field in `SubscriptionConfig` and `MQTTClient.subscribe()` for specifying expected payload formats.
+*   **New**: "Auto" detection mechanism for payload deserialization, attempting formats in a prioritized order (JSON, MessagePack, YAML, PyArrow, Pickle).
 
 ## v0.2.0 (Current)
 
-*   **Breaking Change**: Migrated from Pydantic to `msgspec.Struct` for 10-50x performance improvement in configuration handling.
 *   **New**: Comprehensive CLI with beautiful `rich` output.
 *   **New**: Interactive configuration creation and management via CLI.
 *   **New**: Real-time monitoring with `rich` tables and charts.

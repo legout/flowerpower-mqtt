@@ -22,7 +22,16 @@ def _validate_execution_mode(value: str) -> str:
     return value
 
 
-class MQTTConfig(Struct):
+def _validate_deserialization_format(value: str) -> str:
+    """Validate deserialization format."""
+    supported_formats = ["json", "yaml", "msgpack", "pickle", "protobuf", "pyarrow", "auto"]
+    if value not in supported_formats:
+        raise ValueError(f"Deserialization format must be one of {supported_formats}, got '{value}'")
+    return value
+
+
+
+class MQTTConfig(Struct, frozen=True):
     """MQTT broker configuration."""
     broker: str = "localhost"
     port: int = 1883
@@ -35,7 +44,7 @@ class MQTTConfig(Struct):
     reconnect_delay: int = 5
 
 
-class JobQueueConfig(Struct):
+class JobQueueConfig(Struct, frozen=True):
     """Job queue configuration."""
     enabled: bool = False
     type: str = "rq"
@@ -49,8 +58,15 @@ class SubscriptionConfig(Struct):
     """Individual subscription configuration."""
     topic: str
     pipeline: str
-    qos: Annotated[int, Meta(extra=_validate_qos)] = 0
-    execution_mode: Annotated[str, Meta(extra=_validate_execution_mode)] = "sync"
+    qos: int = 0
+    execution_mode: str = "sync"
+    deserialization_format: str = "auto"
+
+    def __post_init__(self) -> None:
+        """Validate fields after initialization."""
+        _validate_qos(self.qos)
+        _validate_execution_mode(self.execution_mode)
+        _validate_deserialization_format(self.deserialization_format)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for compatibility."""
@@ -59,8 +75,8 @@ class SubscriptionConfig(Struct):
 
 class FlowerPowerMQTTConfig(Struct):
     """Main configuration for FlowerPower MQTT plugin."""
-    mqtt: MQTTConfig = MQTTConfig()
-    job_queue: JobQueueConfig = JobQueueConfig()
+    mqtt: MQTTConfig = msgspec.field(default_factory=lambda: MQTTConfig())
+    job_queue: JobQueueConfig = msgspec.field(default_factory=lambda: JobQueueConfig())
     subscriptions: List[SubscriptionConfig] = msgspec.field(default_factory=list)
     base_dir: str = "."
     log_level: str = "INFO"
@@ -97,6 +113,7 @@ class RuntimeSubscription:
     pipeline: str
     qos: int = 0
     execution_mode: str = "sync"
+    deserialization_format: str = "auto"
     message_count: int = 0
     last_message_time: Optional[float] = None
     error_count: int = 0

@@ -8,7 +8,7 @@ When an MQTT message is received and processed by `flowerpower-mqtt`, the data f
 
 The inputs provided to your FlowerPower pipeline will include:
 
-*   `mqtt_message` (`dict`): The parsed payload of the MQTT message. If the payload is valid JSON, it will be parsed into a Python dictionary. Otherwise, it will contain `raw_payload` (bytes) and `payload_str` (string representation).
+*   `mqtt_message` (`Any`): The deserialized payload of the MQTT message. The type of this object depends on the `deserialization_format` specified for the subscription. For example, it could be a Python `dict` (for JSON or YAML), a `bytes` object (for raw binary data), or a `pyarrow.Table` (for PyArrow IPC). If deserialization fails or the `deserialization_format` is "auto" and no format is successfully detected, the `mqtt_message` will contain `raw_payload` (bytes) and `payload_str` (string representation) as attributes, allowing your pipeline to handle the raw data.
 *   `mqtt_topic` (`str`): The full MQTT topic on which the message was received.
 *   `mqtt_qos` (`int`): The Quality of Service (QoS) level of the received MQTT message (0, 1, or 2).
 *   `execution_timestamp` (`str`): An ISO-formatted timestamp indicating when the message was processed by `flowerpower-mqtt`.
@@ -38,17 +38,41 @@ def process_mqtt_message(
     This function receives the parsed MQTT message payload and metadata.
     """
     print(f"Received message from {mqtt_topic} (QoS {mqtt_qos}) at {execution_timestamp}")
-    
-    # Access message payload
-    sensor_data = mqtt_message.get("sensor_data", {})
-    
+
+    # The type of mqtt_message depends on the deserialization_format.
+    # For JSON/YAML, it's a dict. For PyArrow, it's a pyarrow.Table, etc.
+    # If deserialization fails or format is 'auto' and no format detected,
+    # mqtt_message will have 'raw_payload' and 'payload_str' attributes.
+    if isinstance(mqtt_message, dict):
+        # Handle JSON or YAML payloads
+        sensor_data = mqtt_message.get("sensor_data", {})
+        temperature = sensor_data.get("temperature")
+        humidity = sensor_data.get("humidity")
+    elif hasattr(mqtt_message, 'to_pandas') and callable(mqtt_message.to_pandas):
+        # Handle PyArrow Table (or other Arrow-compatible objects)
+        df = mqtt_message.to_pandas()
+        if not df.empty:
+            temperature = df['temperature'].iloc[0] if 'temperature' in df.columns else None
+            humidity = df['humidity'].iloc[0] if 'humidity' in df.columns else None
+        else:
+            temperature, humidity = None, None
+    elif hasattr(mqtt_message, 'raw_payload'):
+        # Fallback for raw or undecipherable payloads
+        print(f"Received raw payload (bytes): {mqtt_message.raw_payload}")
+        print(f"Received payload (string): {mqtt_message.payload_str}")
+        temperature, humidity = None, None # Or attempt custom parsing here
+    else:
+        # Generic handling for other deserialized types
+        print(f"Received message of type {type(mqtt_message)}: {mqtt_message}")
+        temperature, humidity = None, None # Adjust based on expected types
+
     # Perform some processing
     processed_data = {
         "processed_at": execution_timestamp,
         "source_topic": mqtt_topic,
-        "temperature_celsius": sensor_data.get("temperature"),
-        "humidity_percent": sensor_data.get("humidity"),
-        "status": "processed"
+        "temperature_celsius": temperature,
+        "humidity_percent": humidity,
+        "status": "processed" if temperature is not None else "failed_deserialization"
     }
     
     return processed_data

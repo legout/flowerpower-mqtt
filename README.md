@@ -8,7 +8,8 @@ A simple yet powerful MQTT plugin for [FlowerPower](https://github.com/legout/fl
 - **Simple API**: Easy-to-use interface for connecting, subscribing, and listening
 - **QoS Support**: Full MQTT QoS support (0, 1, 2) for reliable message delivery
 - **Async Processing**: Optional RQ job queue integration for background pipeline execution
-- **High Performance**: Uses msgspec for fast serialization
+- **High Performance**: Uses msgspec for fast serialization and deserialization
+- **Flexible Payload Handling**: Supports JSON, YAML, MessagePack, Pickle, Protobuf, and PyArrow IPC payload serialization/deserialization with auto-detection.
 - **Multiple Execution Modes**: 
   - `sync`: Direct pipeline execution (blocking)
   - `async`: Background execution via RQ
@@ -376,6 +377,33 @@ await mqtt.subscribe("batch/data", "batch_processor", execution_mode="async")
 
 # Mixed: QoS-based routing
 await mqtt.subscribe("mixed/topic", "mixed_pipeline", execution_mode="mixed")
+
+### Payload Deserialization
+
+Specify how incoming MQTT message payloads should be deserialized:
+
+```python
+# JSON (default if not specified for text-based payloads)
+await mqtt.subscribe("data/json", "json_processor", deserialization_format="json")
+
+# MessagePack
+await mqtt.subscribe("data/msgpack", "msgpack_processor", deserialization_format="msgpack")
+
+# YAML
+await mqtt.subscribe("data/yaml", "yaml_processor", deserialization_format="yaml")
+
+# Pickle
+await mqtt.subscribe("data/pickle", "pickle_processor", deserialization_format="pickle")
+
+# Protobuf (requires a compiled Protobuf schema)
+await mqtt.subscribe("data/protobuf", "protobuf_processor", deserialization_format="protobuf")
+
+# PyArrow IPC (e.g., for Arrow Tables)
+await mqtt.subscribe("data/arrow", "arrow_processor", deserialization_format="pyarrow")
+
+# Auto-detection (attempts JSON, MessagePack, YAML, PyArrow, Pickle in order)
+await mqtt.subscribe("data/auto", "auto_processor", deserialization_format="auto")
+```
 ```
 
 ### Context Manager Usage
