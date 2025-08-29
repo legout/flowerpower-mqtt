@@ -338,6 +338,12 @@ flowerpower-mqtt jobs status
 - Use `flowerpower-mqtt --help` to see all available commands
 - Each command has detailed help: `flowerpower-mqtt connect --help`
 
+## Documentation
+
+For comprehensive and detailed information about FlowerPower MQTT, including advanced topics, API references, and in-depth usage guides, please refer to our [Full Documentation](https://legout.github.io/flowerpower-mqtt/).
+
+Our documentation has been recently reorganized to provide a more user-friendly navigation structure, making it easier to find the information you need.
+
 ## Usage Patterns
 
 ### QoS Levels
