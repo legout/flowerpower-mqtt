@@ -12,6 +12,7 @@ import os
 import sys
 from typing import Optional, Dict, Any, List, Union
 from pathlib import Path
+import importlib.metadata
 
 from .client import MQTTClient
 from .listener import MQTTListener
@@ -28,7 +29,7 @@ from .exceptions import (
     ConfigurationError
 )
 
-__version__ = "0.1.0"
+__version__ = importlib.metadata.version("flowerpower-mqtt")
 __all__ = [
     "MQTTPlugin",
     "FlowerPowerMQTTConfig",

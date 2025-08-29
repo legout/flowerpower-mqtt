@@ -888,10 +888,86 @@ def jobs_worker(
             console.print(f"rq worker {queue_name} --url {redis_url}")
             
         elif action == "status":
-            console.print("[yellow]Worker status check not implemented yet[/yellow]")
-            
+            console.print("[blue]Checking worker status...[/blue]")
+
+            try:
+                import subprocess
+                import psutil
+
+                redis_url = plugin.config.job_queue.redis_url
+                queue_name = plugin.config.job_queue.queue_name
+
+                # Check for running RQ worker processes
+                worker_processes = []
+                for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                    try:
+                        if proc.info['name'] == 'python' and proc.info['cmdline']:
+                            cmdline = ' '.join(proc.info['cmdline'])
+                            if f'rq worker {queue_name}' in cmdline and redis_url in cmdline:
+                                worker_processes.append(proc.info)
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        continue
+
+                if worker_processes:
+                    console.print(f"[green]✅ Found {len(worker_processes)} running worker(s)[/green]")
+
+                    status_table = Table(title="Running Workers")
+                    status_table.add_column("PID", style="bold blue")
+                    status_table.add_column("Command", style="green")
+                    status_table.add_column("Status", style="yellow")
+
+                    for proc in worker_processes:
+                        status_table.add_row(
+                            str(proc['pid']),
+                            ' '.join(proc['cmdline'][:4]) + '...' if len(proc['cmdline']) > 4 else ' '.join(proc['cmdline']),
+                            "Running"
+                        )
+
+                    console.print(status_table)
+                else:
+                    console.print(f"[yellow]No running workers found for queue '{queue_name}'[/yellow]")
+                    console.print(f"[dim]To start workers, run: rq worker {queue_name} --url {redis_url}[/dim]")
+
+            except ImportError:
+                console.print("[red]psutil not available. Install with: pip install psutil[/red]")
+                console.print("[yellow]Cannot check worker status without psutil[/yellow]")
+            except Exception as e:
+                console.print(f"[red]Error checking worker status: {e}[/red]")
+
         elif action == "stop":
-            console.print("[yellow]Worker stop not implemented yet[/yellow]")
+            console.print("[blue]Stopping workers...[/blue]")
+
+            try:
+                import subprocess
+                import signal
+                import psutil
+
+                redis_url = plugin.config.job_queue.redis_url
+                queue_name = plugin.config.job_queue.queue_name
+
+                # Find and stop running RQ worker processes
+                stopped_count = 0
+                for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                    try:
+                        if proc.info['name'] == 'python' and proc.info['cmdline']:
+                            cmdline = ' '.join(proc.info['cmdline'])
+                            if f'rq worker {queue_name}' in cmdline and redis_url in cmdline:
+                                console.print(f"[blue]Stopping worker PID {proc.info['pid']}...[/blue]")
+                                proc.terminate()
+                                stopped_count += 1
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        continue
+
+                if stopped_count > 0:
+                    console.print(f"[green]✅ Stopped {stopped_count} worker(s)[/green]")
+                else:
+                    console.print(f"[yellow]No running workers found for queue '{queue_name}'[/yellow]")
+
+            except ImportError:
+                console.print("[red]psutil not available. Install with: pip install psutil[/red]")
+                console.print("[yellow]Cannot stop workers without psutil[/yellow]")
+            except Exception as e:
+                console.print(f"[red]Error stopping workers: {e}[/red]")
             
     except Exception as e:
         console.print(f"[red]Worker management failed: {e}[/red]")

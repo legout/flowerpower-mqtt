@@ -31,6 +31,8 @@ class MQTTConfig(Struct):
     clean_session: bool = True
     username: Optional[str] = None
     password: Optional[str] = None
+    reconnect_retries: int = 5
+    reconnect_delay: int = 5
 
 
 class JobQueueConfig(Struct):

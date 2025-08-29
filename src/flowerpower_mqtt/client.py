@@ -63,34 +63,49 @@ class MQTTClient:
         await self.disconnect()
         
     async def connect(self) -> None:
-        """Establish connection to MQTT broker."""
+        """Establish connection to MQTT broker with automatic reconnection."""
         async with self._lock:
             if self._connected:
                 return
-                
-            try:
-                logger.info(f"Connecting to MQTT broker at {self.config.broker}:{self.config.port}")
-                
-                # Create aiomqtt client with configuration
-                self._client = aiomqtt.Client(
-                    hostname=self.config.broker,
-                    port=self.config.port,
-                    keepalive=self.config.keepalive,
-                    client_id=self.config.client_id,
-                    clean_session=self.config.clean_session,
-                    username=self.config.username,
-                    password=self.config.password,
-                )
-                
-                # Connect using context manager protocol
-                await self._client.__aenter__()
-                self._connected = True
-                
-                logger.info("Successfully connected to MQTT broker")
-                
-            except Exception as e:
-                logger.error(f"Failed to connect to MQTT broker: {e}")
-                raise ConnectionError(f"Failed to connect to MQTT broker: {e}") from e
+
+            last_exception = None
+
+            for attempt in range(self.config.reconnect_retries + 1):
+                try:
+                    logger.info(f"Connecting to MQTT broker at {self.config.broker}:{self.config.port} (attempt {attempt + 1}/{self.config.reconnect_retries + 1})")
+
+                    # Create aiomqtt client with configuration
+                    self._client = aiomqtt.Client(
+                        hostname=self.config.broker,
+                        port=self.config.port,
+                        keepalive=self.config.keepalive,
+                        client_id=self.config.client_id,
+                        clean_session=self.config.clean_session,
+                        username=self.config.username,
+                        password=self.config.password,
+                    )
+
+                    # Connect using context manager protocol
+                    await self._client.__aenter__()
+                    self._connected = True
+
+                    logger.info("Successfully connected to MQTT broker")
+                    return
+
+                except Exception as e:
+                    last_exception = e
+                    logger.warning(f"Connection attempt {attempt + 1} failed: {e}")
+
+                    # Don't wait after the last attempt
+                    if attempt < self.config.reconnect_retries:
+                        # Exponential backoff: delay = base_delay * (2 ^ attempt)
+                        delay = self.config.reconnect_delay * (2 ** attempt)
+                        logger.info(f"Retrying connection in {delay} seconds...")
+                        await asyncio.sleep(delay)
+
+            # All retry attempts failed
+            logger.error(f"Failed to connect to MQTT broker after {self.config.reconnect_retries + 1} attempts")
+            raise ConnectionError(f"Failed to connect to MQTT broker after {self.config.reconnect_retries + 1} attempts: {last_exception}") from last_exception
     
     async def disconnect(self) -> None:
         """Disconnect from MQTT broker."""

@@ -8,7 +8,7 @@ A simple yet powerful MQTT plugin for [FlowerPower](https://github.com/legout/fl
 - **Simple API**: Easy-to-use interface for connecting, subscribing, and listening
 - **QoS Support**: Full MQTT QoS support (0, 1, 2) for reliable message delivery
 - **Async Processing**: Optional RQ job queue integration for background pipeline execution
-- **High Performance**: Uses msgspec for fast serialization (10-50x faster than Pydantic)
+- **High Performance**: Uses msgspec for fast serialization
 - **Multiple Execution Modes**: 
   - `sync`: Direct pipeline execution (blocking)
   - `async`: Background execution via RQ
@@ -17,7 +17,7 @@ A simple yet powerful MQTT plugin for [FlowerPower](https://github.com/legout/fl
 - **Graceful Shutdown**: Ctrl+C handling and proper cleanup
 - **Statistics & Monitoring**: Built-in metrics and job tracking
 - **Configuration Management**: YAML-based configuration support with msgspec validation
-- **Automatic Reconnection**: Robust connection handling with retries
+- **Automatic Reconnection**: Robust connection handling with configurable retry attempts and exponential backoff
 
 ### CLI Features
 - **Beautiful Interface**: Rich, colorful CLI with tables and progress bars
@@ -155,6 +155,8 @@ mqtt:
   port: 1883
   keepalive: 60
   client_id: "flowerpower_mqtt_client"
+  reconnect_retries: 5
+  reconnect_delay: 5
 
 subscriptions:
   - topic: "sensors/+/temperature"
