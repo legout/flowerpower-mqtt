@@ -523,20 +523,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#recommended-installation-using-uv" class="md-nav__link">
+  <a href="#recommended-installation-from-pypi" class="md-nav__link">
     <span class="md-ellipsis">
-      Recommended Installation (using uv)
+      Recommended Installation (from PyPI)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommended Installation (from PyPI)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-uv-pip-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using uv pip (Recommended)
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#alternative-installation-using-pip" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#using-pip" class="md-nav__link">
     <span class="md-ellipsis">
-      Alternative Installation (using pip)
+      Using pip
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1077,25 +1092,15 @@
 <li><strong>FlowerPower</strong>: The core <code>flowerpower</code> library must be installed.</li>
 <li><strong>Redis</strong>: Required for job queue functionality (asynchronous processing). You'll need a running Redis instance accessible from where <code>flowerpower-mqtt</code> will operate.</li>
 </ul>
-<h2 id="recommended-installation-using-uv">Recommended Installation (using <code>uv</code>)<a class="headerlink" href="#recommended-installation-using-uv" title="Permanent link">&para;</a></h2>
+<h2 id="recommended-installation-from-pypi">Recommended Installation (from PyPI)<a class="headerlink" href="#recommended-installation-from-pypi" title="Permanent link">&para;</a></h2>
+<p><code>flowerpower-mqtt</code> is available on PyPI and can be installed using <code>uv pip</code> (recommended) or <code>pip</code>.</p>
+<h3 id="using-uv-pip-recommended">Using <code>uv pip</code> (Recommended)<a class="headerlink" href="#using-uv-pip-recommended" title="Permanent link">&para;</a></h3>
 <p><code>uv</code> is a fast Python package installer and resolver. It's the recommended way to install <code>flowerpower-mqtt</code>.</p>
-<ol>
-<li>
-<p><strong>Clone the Repository</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/legout/flowerpower-mqtt.git
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>flowerpower-mqtt
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>flowerpower-mqtt
 </code></pre></div>
-</li>
-<li>
-<p><strong>Install with <code>uv</code></strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
-</code></pre></div>
-<p>This command installs <code>flowerpower-mqtt</code> in editable mode, which is useful for development and ensures all necessary dependencies are installed.</p>
-</li>
-</ol>
-<h2 id="alternative-installation-using-pip">Alternative Installation (using <code>pip</code>)<a class="headerlink" href="#alternative-installation-using-pip" title="Permanent link">&para;</a></h2>
-<p>If you prefer using <code>pip</code>, you can install <code>flowerpower-mqtt</code> and its dependencies directly.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>flowerpower-mqtt
+<h3 id="using-pip">Using <code>pip</code><a class="headerlink" href="#using-pip" title="Permanent link">&para;</a></h3>
+<p>If you prefer using <code>pip</code>, you can install <code>flowerpower-mqtt</code> directly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>flowerpower-mqtt
 </code></pre></div>
 <p>After installation, the <code>flowerpower-mqtt</code> CLI command will be available in your environment.</p>
 <h2 id="development-installation">Development Installation<a class="headerlink" href="#development-installation" title="Permanent link">&para;</a></h2>
@@ -1103,13 +1108,13 @@
 <ol>
 <li>
 <p><strong>Clone the Repository</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/legout/flowerpower-mqtt.git
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">cd</span><span class="w"> </span>flowerpower-mqtt
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/legout/flowerpower-mqtt.git
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>flowerpower-mqtt
 </code></pre></div>
 </li>
 <li>
 <p><strong>Install Development Dependencies</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
 </code></pre></div>
 <p>This command installs the core library in editable mode along with development-specific dependencies like <code>pytest</code>, <code>black</code>, <code>ruff</code>, and <code>mypy</code>.</p>
 </li>
@@ -1117,7 +1122,7 @@
 <h2 id="shell-completion">Shell Completion<a class="headerlink" href="#shell-completion" title="Permanent link">&para;</a></h2>
 <p>The <code>flowerpower-mqtt</code> CLI supports shell completion for various shells (bash, zsh, fish, powershell). To enable it, follow the instructions provided by <code>typer</code> for your specific shell.</p>
 <p>For example, for <code>bash</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>flowerpower-mqtt<span class="w"> </span>--install-completion<span class="w"> </span>bash
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>flowerpower-mqtt<span class="w"> </span>--install-completion<span class="w"> </span>bash
 </code></pre></div>
 <p>Remember to restart your shell or source your shell's RC file (e.g., <code>.bashrc</code>, <code>.zshrc</code>) after installation for the changes to take effect.</p>
 
