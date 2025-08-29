@@ -41,7 +41,7 @@ cd flowerpower-mqtt
 uv pip install -e .
 
 # Or install dependencies directly
-uv pip install flowerpower aiomqtt redis rq msgspec typer[all] rich
+uv pip install flowerpower-mqtt
 ```
 
 After installation, the `flowerpower-mqtt` CLI command will be available.

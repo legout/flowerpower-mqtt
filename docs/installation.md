@@ -34,7 +34,7 @@ Before installing `flowerpower-mqtt`, ensure you have the following:
 If you prefer using `pip`, you can install `flowerpower-mqtt` and its dependencies directly.
 
 ```bash
-uv pip install flowerpower aiomqtt redis rq msgspec typer[all] rich
+uv pip install flowerpower-mqtt
 ```
 
 After installation, the `flowerpower-mqtt` CLI command will be available in your environment.
