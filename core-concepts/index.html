@@ -605,6 +605,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#payload-deserialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Payload Deserialization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Payload Deserialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Formats
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-deserialization_format-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      The deserialization_format Field
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-detection-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Auto" Detection Mechanism
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1164,16 +1206,27 @@
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;alert_handler&quot;</span>
 <a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="nt">qos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="nt">execution_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sync&quot;</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nt">job_queue</span><span class="p">:</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rq&quot;</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">  </span><span class="nt">redis_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;redis://localhost:6379&quot;</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">  </span><span class="nt">queue_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mqtt_pipelines&quot;</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">  </span><span class="nt">worker_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/flowerpower/project&quot;</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;INFO&quot;</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="nt">deserialization_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json&quot;</span><span class="w"> </span><span class="c1"># Example: explicitly set deserialization format</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sensors/binary_data&quot;</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;process_binary_sensor&quot;</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="nt">qos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="nt">execution_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;async&quot;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">    </span><span class="nt">deserialization_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;msgpack&quot;</span><span class="w"> </span><span class="c1"># Example: MessagePack payload</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mixed/format_data&quot;</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;handle_mixed_format&quot;</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="nt">qos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">    </span><span class="nt">execution_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;async&quot;</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">    </span><span class="nt">deserialization_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;auto&quot;</span><span class="w"> </span><span class="c1"># Example: auto-detect payload format</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="nt">job_queue</span><span class="p">:</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rq&quot;</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">  </span><span class="nt">redis_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;redis://localhost:6379&quot;</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">  </span><span class="nt">queue_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mqtt_pipelines&quot;</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">  </span><span class="nt">worker_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/flowerpower/project&quot;</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;INFO&quot;</span>
 </code></pre></div>
 <p>This configuration can be loaded by both the CLI and the programmatic API, ensuring consistency across different usage patterns. The configuration is validated using <code>msgspec</code> for robust error checking.</p>
 <h2 id="statistics-and-monitoring">Statistics and Monitoring<a class="headerlink" href="#statistics-and-monitoring" title="Permanent link">&para;</a></h2>
@@ -1185,6 +1238,41 @@
 <li><strong>Connection Status</strong>: Indicates whether the plugin is currently connected to the MQTT broker.</li>
 <li><strong>Job Queue Status</strong>: Provides insights into the state of the job queue if enabled.</li>
 </ul>
+<h2 id="payload-deserialization">Payload Deserialization<a class="headerlink" href="#payload-deserialization" title="Permanent link">&para;</a></h2>
+<p><code>flowerpower-mqtt</code> offers robust payload deserialization capabilities, allowing you to automatically convert incoming MQTT message payloads from various formats into Python objects. This is managed primarily through the <code>deserialization_format</code> field in your <code>SubscriptionConfig</code>.</p>
+<h3 id="supported-formats">Supported Formats<a class="headerlink" href="#supported-formats" title="Permanent link">&para;</a></h3>
+<p>The <code>MQTTMessage</code> class supports the following payload serialization/deserialization formats:</p>
+<ul>
+<li><strong><code>json</code></strong>: For payloads encoded as JSON strings. Deserialized into Python dictionaries or lists.</li>
+<li><strong><code>yaml</code></strong>: For payloads encoded as YAML strings. Deserialized into Python dictionaries or lists.</li>
+<li><strong><code>msgpack</code></strong>: For payloads encoded using MessagePack, a binary serialization format. Deserialized into standard Python types.</li>
+<li><strong><code>pickle</code></strong>: For payloads serialized using Python's <code>pickle</code> module. Deserialized into the original Python object. <strong>Use with caution</strong> as unpickling data from untrusted sources can be a security risk.</li>
+<li><strong><code>protobuf</code></strong>: For payloads serialized using Google's Protocol Buffers. Requires a compiled Protobuf schema and the corresponding Python classes to be available.</li>
+<li><strong><code>pyarrow</code></strong>: For payloads serialized using Apache Arrow IPC format (e.g., Arrow Tables, Arrays). Deserialized into PyArrow objects.</li>
+</ul>
+<h3 id="the-deserialization_format-field">The <code>deserialization_format</code> Field<a class="headerlink" href="#the-deserialization_format-field" title="Permanent link">&para;</a></h3>
+<p>When defining a subscription, you can specify the <code>deserialization_format</code> to instruct <code>flowerpower-mqtt</code> how to interpret the incoming payload:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">subscriptions</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sensors/json_data&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;process_json&quot;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">deserialization_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json&quot;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sensor/readings/msgpack&quot;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;process_msgpack&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">deserialization_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;msgpack&quot;</span>
+</code></pre></div>
+<p>If <code>deserialization_format</code> is not specified for a subscription, <code>flowerpower-mqtt</code> will attempt to deserialize text-based payloads as JSON by default.</p>
+<h3 id="auto-detection-mechanism">"Auto" Detection Mechanism<a class="headerlink" href="#auto-detection-mechanism" title="Permanent link">&para;</a></h3>
+<p>The <code>deserialize()</code> method within <code>MQTTMessage</code> includes an intelligent "auto" detection feature. When <code>deserialization_format</code> is set to <code>"auto"</code>, the system attempts to deserialize the payload in a specific, prioritized order until a successful parse is achieved. This provides flexibility when the payload format might vary or is not strictly known beforehand.</p>
+<p>The order of attempts for "auto" detection is:</p>
+<ol>
+<li><strong>JSON</strong>: Attempts to parse the payload as a JSON string. This is a common and often human-readable format.</li>
+<li><strong>MessagePack</strong>: If JSON parsing fails, it attempts MessagePack deserialization. MessagePack is a compact binary format, making it efficient for many IoT and data streaming scenarios.</li>
+<li><strong>YAML</strong>: If MessagePack fails, it tries YAML. YAML is human-friendly and often used for configuration, but can also be used for data serialization.</li>
+<li><strong>PyArrow</strong>: Next, it attempts PyArrow IPC deserialization. This is particularly useful for structured tabular data.</li>
+<li><strong>Pickle</strong>: Finally, it attempts Python's Pickle format. This is a Python-specific serialization and should be used with caution, especially with untrusted data, due to potential security vulnerabilities.</li>
+</ol>
+<p><strong>Rationale for the Order:</strong>
+The order is chosen to prioritize commonly used, safer, and more efficient formats first (JSON, MessagePack, PyArrow) before falling back to less common or potentially less secure formats like Pickle. This ensures that the most likely successful and performant deserialization attempts are made early. If all attempts fail, the payload will be available as <code>raw_payload</code> (bytes) and <code>payload_str</code> (string) in the <code>MQTTMessage</code> object passed to your pipeline, allowing for manual handling.</p>
 <p>These statistics are accessible via both the CLI (<code>flowerpower-mqtt status</code>, <code>flowerpower-mqtt monitor</code>) and the programmatic API (<code>MQTTPlugin.get_statistics()</code>, <code>MQTTPlugin.get_subscriptions()</code>), allowing you to integrate monitoring into your existing dashboards or scripts.</p>
 
 

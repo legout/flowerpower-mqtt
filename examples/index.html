@@ -782,6 +782,57 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#7-payload-deserialization-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Payload Deserialization Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Payload Deserialization Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-json-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 1: JSON Payload
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-messagepack-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 2: MessagePack Payload
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-3-pyarrow-ipc-payload-eg-arrow-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 3: PyArrow IPC Payload (e.g., Arrow Table)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-4-auto-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 4: "Auto" Detection
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1095,7 +1146,7 @@
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="c1"># Subscribe to a topic with default synchronous execution</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;sensor/temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;process_temperature_pipeline&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;sensor/temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;process_temperature_pipeline&quot;</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Listening for MQTT messages on &#39;sensor/temperature&#39; (synchronous execution)...&quot;</span><span class="p">)</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Press Ctrl+C to stop.&quot;</span><span class="p">)</span>
@@ -1123,7 +1174,7 @@
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="c1"># Subscribe with async execution mode</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;data/sensor&quot;</span><span class="p">,</span> <span class="s2">&quot;process_sensor_data&quot;</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">execution_mode</span><span class="o">=</span><span class="s2">&quot;async&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;data/sensor&quot;</span><span class="p">,</span> <span class="s2">&quot;process_sensor_data&quot;</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">execution_mode</span><span class="o">=</span><span class="s2">&quot;async&quot;</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;msgpack&quot;</span><span class="p">)</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
 <a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Listening for MQTT messages on &#39;data/sensor&#39; (asynchronous execution via RQ)...&quot;</span><span class="p">)</span>
 <a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ensure an RQ worker is running: `rq worker mqtt_pipelines --url redis://localhost:6379`&quot;</span><span class="p">)</span>
@@ -1154,18 +1205,25 @@
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;update_device_status&quot;</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nt">qos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="nt">execution_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sync&quot;</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;alerts/high&quot;</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;send_alert_notification&quot;</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="nt">qos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="nt">execution_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;async&quot;</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="nt">job_queue</span><span class="p">:</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">  </span><span class="nt">redis_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;redis://localhost:6379&quot;</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="nt">queue_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mqtt_jobs&quot;</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/your/flowerpower/project&quot;</span><span class="w"> </span><span class="c1"># IMPORTANT: Replace with your FlowerPower project path</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;INFO&quot;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="nt">deserialization_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json&quot;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;alerts/high&quot;</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;send_alert_notification&quot;</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="nt">qos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="nt">execution_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;async&quot;</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="nt">deserialization_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;yaml&quot;</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/raw&quot;</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;process_raw_data&quot;</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="nt">qos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="nt">execution_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sync&quot;</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">    </span><span class="nt">deserialization_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;auto&quot;</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="nt">job_queue</span><span class="p">:</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">  </span><span class="nt">redis_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;redis://localhost:6379&quot;</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">  </span><span class="nt">queue_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mqtt_jobs&quot;</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/your/flowerpower/project&quot;</span><span class="w"> </span><span class="c1"># IMPORTANT: Replace with your FlowerPower project path</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;INFO&quot;</span>
 </code></pre></div>
 <p>Then, use it in your Python script:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
@@ -1199,8 +1257,8 @@
 <a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
 <a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="c1"># Subscribe with mixed execution mode</span>
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="c1"># QoS 2 messages will be sync, QoS 0/1 will be async</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;critical/q2_data&quot;</span><span class="p">,</span> <span class="s2">&quot;process_critical_data&quot;</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">execution_mode</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;non_critical/q1_data&quot;</span><span class="p">,</span> <span class="s2">&quot;process_non_critical_data&quot;</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">execution_mode</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;critical/q2_data&quot;</span><span class="p">,</span> <span class="s2">&quot;process_critical_data&quot;</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">execution_mode</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;non_critical/q1_data&quot;</span><span class="p">,</span> <span class="s2">&quot;process_non_critical_data&quot;</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">execution_mode</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;msgpack&quot;</span><span class="p">)</span>
 <a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
 <a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Listening with mixed execution mode...&quot;</span><span class="p">)</span>
 <a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;QoS 2 messages -&gt; synchronous pipeline execution.&quot;</span><span class="p">)</span>
@@ -1227,8 +1285,8 @@ Follow the prompts to set up your broker, base directory, and optionally enable 
 </li>
 <li>
 <p><strong>Add Subscriptions</strong></p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>flowerpower-mqtt<span class="w"> </span>subscribe<span class="w"> </span><span class="s2">&quot;sensors/light&quot;</span><span class="w"> </span>process_light_data<span class="w"> </span>--qos<span class="w"> </span><span class="m">0</span><span class="w"> </span>--mode<span class="w"> </span>sync<span class="w"> </span>--config<span class="w"> </span>my_cli_config.yml<span class="w"> </span>--save-config
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>flowerpower-mqtt<span class="w"> </span>subscribe<span class="w"> </span><span class="s2">&quot;sensors/humidity&quot;</span><span class="w"> </span>process_humidity_data<span class="w"> </span>--qos<span class="w"> </span><span class="m">1</span><span class="w"> </span>--mode<span class="w"> </span>async<span class="w"> </span>--config<span class="w"> </span>my_cli_config.yml<span class="w"> </span>--save-config
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>flowerpower-mqtt<span class="w"> </span>subscribe<span class="w"> </span><span class="s2">&quot;sensors/light&quot;</span><span class="w"> </span>process_light_data<span class="w"> </span>--qos<span class="w"> </span><span class="m">0</span><span class="w"> </span>--mode<span class="w"> </span>sync<span class="w"> </span>--deserialization-format<span class="w"> </span>json<span class="w"> </span>--config<span class="w"> </span>my_cli_config.yml<span class="w"> </span>--save-config
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>flowerpower-mqtt<span class="w"> </span>subscribe<span class="w"> </span><span class="s2">&quot;sensors/humidity&quot;</span><span class="w"> </span>process_humidity_data<span class="w"> </span>--qos<span class="w"> </span><span class="m">1</span><span class="w"> </span>--mode<span class="w"> </span>async<span class="w"> </span>--deserialization-format<span class="w"> </span>auto<span class="w"> </span>--config<span class="w"> </span>my_cli_config.yml<span class="w"> </span>--save-config
 </code></pre></div>
 The <code>--save-config</code> flag updates <code>my_cli_config.yml</code> with the new subscriptions.</p>
 </li>
@@ -1264,29 +1322,118 @@ Press <code>Ctrl+C</code> to stop monitoring.</p>
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>flowerpower-mqtt<span class="w"> </span>config<span class="w"> </span>validate<span class="w"> </span>hybrid_config.yml
 </code></pre></div>
 </li>
+</ol>
+<h2 id="7-payload-deserialization-examples">7. Payload Deserialization Examples<a class="headerlink" href="#7-payload-deserialization-examples" title="Permanent link">&para;</a></h2>
+<p>This section demonstrates how to use different <code>deserialization_format</code> options for your MQTT subscriptions, including the "auto" detection feature.</p>
+<h3 id="scenario-1-json-payload">Scenario 1: JSON Payload<a class="headerlink" href="#scenario-1-json-payload" title="Permanent link">&para;</a></h3>
+<p>Assume an MQTT message on <code>data/sensor/json</code> with payload: <code>{"temperature": 25.5, "humidity": 60}</code></p>
+<p><strong>Subscription:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;data/sensor/json&quot;</span><span class="p">,</span> <span class="s2">&quot;process_sensor_data&quot;</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Expected <code>mqtt_message</code> in pipeline:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># mqtt_message will be a Python dictionary</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="p">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">25.5</span><span class="p">,</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">60</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="scenario-2-messagepack-payload">Scenario 2: MessagePack Payload<a class="headerlink" href="#scenario-2-messagepack-payload" title="Permanent link">&para;</a></h3>
+<p>Assume an MQTT message on <code>data/sensor/msgpack</code> with payload (binary MessagePack encoding of <code>{"pressure": 1012, "altitude": 150}</code>):</p>
+<p><strong>Subscription:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;data/sensor/msgpack&quot;</span><span class="p">,</span> <span class="s2">&quot;process_sensor_data&quot;</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;msgpack&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Expected <code>mqtt_message</code> in pipeline:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># mqtt_message will be a Python dictionary</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="p">{</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="mi">1012</span><span class="p">,</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    <span class="s2">&quot;altitude&quot;</span><span class="p">:</span> <span class="mi">150</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="scenario-3-pyarrow-ipc-payload-eg-arrow-table">Scenario 3: PyArrow IPC Payload (e.g., Arrow Table)<a class="headerlink" href="#scenario-3-pyarrow-ipc-payload-eg-arrow-table" title="Permanent link">&para;</a></h3>
+<p>Assume an MQTT message on <code>data/sensor/arrow</code> with a PyArrow IPC-encoded Arrow Table payload:</p>
+<p><strong>Subscription:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;data/sensor/arrow&quot;</span><span class="p">,</span> <span class="s2">&quot;process_sensor_data&quot;</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;pyarrow&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Expected <code>mqtt_message</code> in pipeline:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># mqtt_message will be a pyarrow.Table object</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># You can convert it to a Pandas DataFrame for easier processing:</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="c1"># df = mqtt_message.to_pandas()</span>
+</code></pre></div>
+<h3 id="scenario-4-auto-detection">Scenario 4: "Auto" Detection<a class="headerlink" href="#scenario-4-auto-detection" title="Permanent link">&para;</a></h3>
+<p>Assume an MQTT message on <code>data/sensor/auto</code> where the payload could be JSON, MessagePack, or YAML.</p>
+<p><strong>Subscription:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;data/sensor/auto&quot;</span><span class="p">,</span> <span class="s2">&quot;process_sensor_data&quot;</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Expected <code>mqtt_message</code> in pipeline (depending on actual payload):</strong></p>
+<ul>
+<li>If payload is <code>{"status": "ok"}</code> (JSON): <code>mqtt_message</code> will be <code>{"status": "ok"}</code> (dict).</li>
+<li>If payload is MessagePack-encoded <code>{"value": 123}</code>: <code>mqtt_message</code> will be <code>{"value": 123}</code> (dict).</li>
+<li>If payload is YAML-encoded <code>key: value</code>: <code>mqtt_message</code> will be <code>{'key': 'value'}</code> (dict).</li>
+<li>If payload is <code>b'raw_bytes'</code> (and no auto-detection succeeds): <code>mqtt_message</code> will contain <code>raw_payload=b'raw_bytes'</code> and <code>payload_str='raw_bytes'</code>. Your pipeline should handle this fallback.</li>
+</ul>
+<p><strong>Example Python code for a pipeline demonstrating deserialized input:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># pipelines/process_sensor_data.py</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pyarrow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pa</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">process_sensor_data</span><span class="p">(</span><span class="n">mqtt_message</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">mqtt_topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="sd">    Processes incoming sensor data, handling different deserialized formats.</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>    <span class="n">processed_data</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>        <span class="s2">&quot;source_topic&quot;</span><span class="p">:</span> <span class="n">mqtt_topic</span><span class="p">,</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>        <span class="s2">&quot;processed_payload&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>        <span class="s2">&quot;payload_type&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">mqtt_message</span><span class="p">))</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>    <span class="p">}</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mqtt_message</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>        <span class="c1"># Handles JSON, YAML, MessagePack, Pickle (if dict)</span>
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>        <span class="n">processed_data</span><span class="p">[</span><span class="s2">&quot;processed_payload&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mqtt_message</span>
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processed dictionary payload from </span><span class="si">{</span><span class="n">mqtt_topic</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">mqtt_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mqtt_message</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="p">):</span>
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>        <span class="c1"># Handles PyArrow Tables</span>
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>        <span class="n">df</span> <span class="o">=</span> <span class="n">mqtt_message</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>        <span class="n">processed_data</span><span class="p">[</span><span class="s2">&quot;processed_payload&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processed PyArrow Table payload from </span><span class="si">{</span><span class="n">mqtt_topic</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="si">{</span><span class="n">df</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mqtt_message</span><span class="p">,</span> <span class="s1">&#39;raw_payload&#39;</span><span class="p">):</span>
+<a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>        <span class="c1"># Fallback for raw bytes or failed auto-detection</span>
+<a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>        <span class="n">processed_data</span><span class="p">[</span><span class="s2">&quot;processed_payload&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a>            <span class="s2">&quot;raw_payload_bytes&quot;</span><span class="p">:</span> <span class="n">mqtt_message</span><span class="o">.</span><span class="n">raw_payload</span><span class="o">.</span><span class="n">hex</span><span class="p">(),</span>
+<a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>            <span class="s2">&quot;raw_payload_str&quot;</span><span class="p">:</span> <span class="n">mqtt_message</span><span class="o">.</span><span class="n">payload_str</span>
+<a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a>        <span class="p">}</span>
+<a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processed raw payload from </span><span class="si">{</span><span class="n">mqtt_topic</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">mqtt_message</span><span class="o">.</span><span class="n">payload_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a>        <span class="c1"># Handle other potential types or log an error</span>
+<a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported payload type for </span><span class="si">{</span><span class="n">mqtt_topic</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">mqtt_message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a>        <span class="n">processed_data</span><span class="p">[</span><span class="s2">&quot;processed_payload&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Unsupported format&quot;</span>
+<a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a>
+<a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a>    <span class="k">return</span> <span class="n">processed_data</span>
+</code></pre></div>
+<ol>
 <li>
 <p><strong>Load and Extend in Python</strong></p>
 <p>Load the CLI-generated configuration in your Python application and add custom business logic or dynamic subscriptions.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flowerpower_mqtt</span><span class="w"> </span><span class="kn">import</span> <span class="n">MQTTPlugin</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="c1"># Load the configuration generated by the CLI</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="n">mqtt</span> <span class="o">=</span> <span class="n">MQTTPlugin</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="s2">&quot;hybrid_config.yml&quot;</span><span class="p">)</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>    <span class="c1"># Add dynamic subscriptions or override existing ones</span>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;custom/topic&quot;</span><span class="p">,</span> <span class="s2">&quot;custom_pipeline&quot;</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
-<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>    <span class="c1"># Implement custom application logic here</span>
-<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hybrid application running. Listening for messages...&quot;</span><span class="p">)</span>
-<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>
-<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>    <span class="c1"># Start the listener (can be background or foreground)</span>
-<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">start_listener</span><span class="p">()</span>
-<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>
-<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flowerpower_mqtt</span><span class="w"> </span><span class="kn">import</span> <span class="n">MQTTPlugin</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    <span class="c1"># Load the configuration generated by the CLI</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>    <span class="n">mqtt</span> <span class="o">=</span> <span class="n">MQTTPlugin</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="s2">&quot;hybrid_config.yml&quot;</span><span class="p">)</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>    <span class="c1"># Add dynamic subscriptions or override existing ones</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;custom/topic&quot;</span><span class="p">,</span> <span class="s2">&quot;custom_pipeline&quot;</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">deserialization_format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>    <span class="c1"># Implement custom application logic here</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hybrid application running. Listening for messages...&quot;</span><span class="p">)</span>
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>    <span class="c1"># Start the listener (can be background or foreground)</span>
+<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>    <span class="k">await</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">start_listener</span><span class="p">()</span>
+<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>
+<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </code></pre></div>
 </li>
 </ol>
