@@ -30,18 +30,22 @@ A simple yet powerful MQTT plugin for [FlowerPower](https://github.com/legout/fl
 
 ## Installation
 
-Install using `uv` (recommended):
+`flowerpower-mqtt` is available on PyPI and can be installed using `uv pip` (recommended) or `pip`.
+
+### Using `uv pip` (Recommended)
+
+`uv` is a fast Python package installer and resolver. It's the recommended way to install `flowerpower-mqtt`.
 
 ```bash
-# Clone the repository
-git clone https://github.com/legout/flowerpower-mqtt.git
-cd flowerpower-mqtt
-
-# Install with uv
-uv pip install -e .
-
-# Or install dependencies directly
 uv pip install flowerpower-mqtt
+```
+
+### Using `pip`
+
+If you prefer using `pip`, you can install `flowerpower-mqtt` directly:
+
+```bash
+pip install flowerpower-mqtt
 ```
 
 After installation, the `flowerpower-mqtt` CLI command will be available.

@@ -10,31 +10,24 @@ Before installing `flowerpower-mqtt`, ensure you have the following:
 *   **FlowerPower**: The core `flowerpower` library must be installed.
 *   **Redis**: Required for job queue functionality (asynchronous processing). You'll need a running Redis instance accessible from where `flowerpower-mqtt` will operate.
 
-## Recommended Installation (using `uv`)
+## Recommended Installation (from PyPI)
+
+`flowerpower-mqtt` is available on PyPI and can be installed using `uv pip` (recommended) or `pip`.
+
+### Using `uv pip` (Recommended)
 
 `uv` is a fast Python package installer and resolver. It's the recommended way to install `flowerpower-mqtt`.
 
-1.  **Clone the Repository**
-
-    ```bash
-    git clone https://github.com/legout/flowerpower-mqtt.git
-    cd flowerpower-mqtt
-    ```
-
-2.  **Install with `uv`**
-
-    ```bash
-    uv pip install -e .
-    ```
-
-    This command installs `flowerpower-mqtt` in editable mode, which is useful for development and ensures all necessary dependencies are installed.
-
-## Alternative Installation (using `pip`)
-
-If you prefer using `pip`, you can install `flowerpower-mqtt` and its dependencies directly.
-
 ```bash
 uv pip install flowerpower-mqtt
+```
+
+### Using `pip`
+
+If you prefer using `pip`, you can install `flowerpower-mqtt` directly:
+
+```bash
+pip install flowerpower-mqtt
 ```
 
 After installation, the `flowerpower-mqtt` CLI command will be available in your environment.
