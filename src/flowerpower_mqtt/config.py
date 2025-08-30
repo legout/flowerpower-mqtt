@@ -88,18 +88,17 @@ class FlowerPowerMQTTConfig(Struct):
             raise FileNotFoundError(f"Configuration file not found: {file_path}")
         
         with open(file_path, 'r') as f:
-            data = yaml.safe_load(f)
+            return msgspec.yaml.decode(f.read(), type=cls)
         
-        # Convert nested dictionaries to proper types
-        return msgspec.convert(data, cls)
+
     
     def to_yaml(self, file_path: Path) -> None:
         """Save configuration to YAML file."""
         # Convert struct to dictionary
         data = msgspec.to_builtins(self)
         
-        with open(file_path, 'w') as f:
-            yaml.dump(data, f, default_flow_style=False, indent=2)
+        with open(file_path, 'wb') as f:
+            f.write(msgspec.yaml.encode(data))
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for compatibility."""

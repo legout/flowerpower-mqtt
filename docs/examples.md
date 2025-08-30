@@ -1,36 +1,66 @@
 # Examples
 
-This section provides a gallery of practical, copy-paste-friendly examples covering common use cases for `flowerpower-mqtt`, demonstrating both CLI and programmatic approaches.
+This section provides an overview of the comprehensive examples available in the `examples/` directory. Each example is now organized as a self-contained project with detailed documentation, dependencies, and multiple runnable formats.
 
-## 1. Simple Synchronous Listener (Programmatic)
+## Example Organization
 
-This example sets up a basic MQTT listener that processes messages synchronously.
+The examples are now organized as self-contained projects in the `examples/` directory:
 
-```python
-import asyncio
-from flowerpower_mqtt import MQTTPlugin
+### Core Examples
 
-async def main():
-    # Create plugin instance
-    mqtt = MQTTPlugin(
-        broker="localhost",
-        base_dir="/path/to/your/flowerpower/project" # IMPORTANT: Replace with your FlowerPower project path
-    )
-    
-    # Connect to broker
-    await mqtt.connect()
-    
-    # Subscribe to a topic with default synchronous execution
-    await mqtt.subscribe("sensor/temperature", "process_temperature_pipeline", deserialization_format="json")
-    
-    print("Listening for MQTT messages on 'sensor/temperature' (synchronous execution)...")
-    print("Press Ctrl+C to stop.")
-    
-    # Start listening (blocks until Ctrl+C)
-    await mqtt.start_listener()
+1. **`examples/basic_usage/`** - Simple synchronous MQTT message processing
+   - Demonstrates basic connection and subscription
+   - Shows synchronous message processing
+   - Includes Jupyter and Marimo notebooks
 
-if __name__ == "__main__":
-    asyncio.run(main())
+2. **`examples/async_with_rq/`** - Asynchronous processing with RQ job queue
+   - Shows background pipeline execution
+   - Demonstrates RQ integration
+   - Includes monitoring and statistics
+
+3. **`examples/config_based/`** - Configuration file management
+   - YAML-based configuration setup
+   - Multiple subscription management
+   - Runtime configuration updates
+
+4. **`examples/monitoring/`** - Real-time statistics and monitoring
+   - Custom monitoring classes
+   - Performance metrics tracking
+   - Interactive monitoring dashboard
+
+5. **`examples/multiple_qos/`** - Different QoS levels and execution modes
+   - QoS 0, 1, 2 demonstrations
+   - Execution mode comparisons
+   - Performance implications
+
+6. **`examples/cli_vs_programmatic/`** - CLI vs programmatic API comparison
+   - When to use each approach
+   - Hybrid workflow examples
+   - Decision matrix for choosing approaches
+
+### Common Resources
+
+- **`examples/_common/pipelines/example_pipeline.py`** - Sample FlowerPower pipeline
+- Shared utilities and common code patterns
+
+## Running Examples
+
+Each example is self-contained with its own README.md:
+
+```bash
+# Navigate to any example
+cd examples/basic_usage
+
+# Install dependencies
+uv pip install -e ../..
+uv pip install .
+
+# Run the example
+uv run python basic_usage.py
+
+# Or explore interactively
+uv run jupyter lab basic_usage.ipynb
+uv run marimo run basic_usage_marimo.py
 ```
 
 ## 2. Asynchronous Processing with RQ (Programmatic)

@@ -1,0 +1,11 @@
+[project]
+name = "flowerpower-mqtt-example-basic-usage"
+version = "0.1.0"
+description = "Basic usage example for flowerpower-mqtt."
+dependencies = [
+    # flowerpower-mqtt will be installed in editable mode from the root
+    "jupyterlab",
+]
+
+[tool.uv]
+# Potentially configure uv to find the editable install

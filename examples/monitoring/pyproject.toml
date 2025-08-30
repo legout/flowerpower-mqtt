@@ -1,0 +1,12 @@
+[project]
+name = "flowerpower-mqtt-example-monitoring"
+version = "0.1.0"
+description = "Monitoring and statistics example for flowerpower-mqtt."
+dependencies = [
+    # flowerpower-mqtt will be installed in editable mode from the root
+    "jupyterlab",
+    "marimo",  # For interactive monitoring dashboard
+]
+
+[tool.uv]
+# Potentially configure uv to find the editable install

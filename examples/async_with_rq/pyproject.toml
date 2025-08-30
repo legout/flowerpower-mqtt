@@ -1,0 +1,12 @@
+[project]
+name = "flowerpower-mqtt-example-async-with-rq"
+version = "0.1.0"
+description = "Asynchronous processing example with RQ for flowerpower-mqtt."
+dependencies = [
+    # flowerpower-mqtt will be installed in editable mode from the root
+    # RQ and Redis dependencies are included in the main project
+    "jupyterlab",
+]
+
+[tool.uv]
+# Potentially configure uv to find the editable install

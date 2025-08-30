@@ -519,19 +519,49 @@ except SubscriptionError as e:
 
 ## Examples
 
-Check the `examples/` directory for more comprehensive examples:
+Check the `examples/` directory for comprehensive, self-contained examples. Each example is organized in its own dedicated folder with complete setup instructions, dependencies, and runnable notebooks.
 
-### Programmatic Examples
-- `examples/basic_usage.py` - Simple synchronous usage
-- `examples/async_with_rq.py` - Asynchronous processing with RQ
-- `examples/config_based.py` - Configuration file usage
-- `examples/multiple_qos.py` - Different QoS levels
-- `examples/monitoring.py` - Statistics and monitoring
+### Available Examples
 
-### CLI Integration Examples  
-- `examples/cli_usage.py` - CLI and programmatic integration
-- `examples/programmatic_vs_cli.py` - Comparison of approaches
-- `examples/example_pipeline.py` - Sample FlowerPower pipeline
+- **`examples/basic_usage/`** - Simple synchronous MQTT message processing
+- **`examples/async_with_rq/`** - Asynchronous processing with RQ job queue
+- **`examples/config_based/`** - Configuration file management and usage
+- **`examples/monitoring/`** - Real-time statistics and monitoring
+- **`examples/multiple_qos/`** - Different QoS levels and execution modes
+- **`examples/cli_vs_programmatic/`** - CLI vs programmatic API comparison
+
+### Example Structure
+
+Each example folder contains:
+- `README.md` - Detailed setup and usage instructions
+- `pyproject.toml` - Project dependencies and configuration
+- `[example_name].py` - Original Python script
+- `[example_name].ipynb` - Interactive Jupyter notebook
+- `[example_name]_marimo.py` - Marimo notebook for reactive exploration
+
+### Quick Start with Examples
+
+```bash
+# Navigate to an example
+cd examples/basic_usage
+
+# Install dependencies
+uv pip install -e ../..
+uv pip install .
+
+# Run the example
+uv run python basic_usage.py
+
+# Or explore interactively with Jupyter
+uv run jupyter lab basic_usage.ipynb
+
+# Or use Marimo for reactive exploration
+uv run marimo run basic_usage_marimo.py
+```
+
+### Common Pipeline
+
+The `examples/_common/pipelines/example_pipeline.py` contains a sample FlowerPower pipeline that demonstrates how to process MQTT messages within your data pipelines.
 
 ## CLI vs Programmatic Usage
 

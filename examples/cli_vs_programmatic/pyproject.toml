@@ -1,0 +1,11 @@
+[project]
+name = "flowerpower-mqtt-example-cli-vs-programmatic"
+version = "0.1.0"
+description = "CLI vs programmatic usage guide for flowerpower-mqtt."
+dependencies = [
+    # flowerpower-mqtt will be installed in editable mode from the root
+    "jupyterlab",
+]
+
+[tool.uv]
+# Potentially configure uv to find the editable install
