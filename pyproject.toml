@@ -1,6 +1,6 @@
 [project]
 name = "flowerpower-mqtt"
-version = "0.2.1"
+version = "0.2.2"
 description = "MQTT plugin for FlowerPower - trigger pipeline execution on MQTT messages"
 readme = "README.md"
 authors = [
@@ -8,7 +8,7 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "flowerpower",
+    "flowerpower>=0.20.0",
     "aiomqtt>=2.0.0",
     "redis>=4.0.0",
     "rq>=1.15.0",
@@ -17,10 +17,8 @@ dependencies = [
     "msgpack>=1.0.0",
     "protobuf>=4.0.0",
     "pyarrow>=20.0.0",
-    "asyncio-mqtt",
     "typer>=0.16.0",
     "rich>=13.0.0",
-    "marimo>=0.15.2",
 ]
 
 [project.urls]
